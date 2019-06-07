@@ -24,7 +24,7 @@
 #
 ###############################################################################
 
- - hosts: all
+ - hosts: minimal
    pre_tasks:
      - name: Verify Ansible meets SCAP-Security-Guide version requirements.
        assert:
