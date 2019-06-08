@@ -27,7 +27,7 @@
 ###############################################################################
 
 
- - hosts: all
+ - hosts: pci-dss
    pre_tasks:
      - name: Verify Ansible meets SCAP-Security-Guide version requirements.
        assert:

@@ -42,7 +42,7 @@
 ###############################################################################
 
 
- - hosts: all
+ - hosts: nist
    pre_tasks:
      - name: Verify Ansible meets SCAP-Security-Guide version requirements.
        assert:

@@ -33,7 +33,7 @@
 ###############################################################################
 
 
- - hosts: all
+ - hosts: ospp42
    pre_tasks:
      - name: Verify Ansible meets SCAP-Security-Guide version requirements.
        assert:
