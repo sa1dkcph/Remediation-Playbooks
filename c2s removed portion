@@ -236,3 +236,19 @@
         - high_disruption
         - NIST-800-53-CM-7
         - NIST-800-53-MP-2
+
+      - name: Ensure permission noexec are set on /tmp
+      mount:
+        path: "/tmp"
+        src: "{{device_name.stdout}}"
+        opts: "{{device_cur_mountoption.stdout}},noexec"
+        state: "mounted"
+        fstype: "{{device_fstype.stdout}}"
+      tags:
+        - mount_option_tmp_noexec
+        - unknown_severity
+        - configure_strategy
+        - low_complexity
+        - high_disruption
+        - NIST-800-53-CM-7
+        - NIST-800-53-MP-2
