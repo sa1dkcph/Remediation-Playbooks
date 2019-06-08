@@ -51,3 +51,172 @@
             /dev/cdrom
       tags:
         - always
+
+    - name: get back device associated to mountpoint
+      shell: mount | grep ' {{ var_removable_partition }} ' |cut -d ' ' -f 1
+      register: device_name
+      check_mode: no
+      tags:
+        - mount_option_nodev_removable_partitions
+        - unknown_severity
+        - configure_strategy
+        - low_complexity
+        - high_disruption
+        - NIST-800-53-AC-19(a)
+        - NIST-800-53-AC-19(d)
+        - NIST-800-53-AC-19(e)
+        - NIST-800-53-CM-7
+        - NIST-800-53-MP-2
+    
+    - name: get back device previous mount option
+      shell: mount | grep ' {{ var_removable_partition }} ' | sed -re 's:.*\((.*)\):\1:'
+      register: device_cur_mountoption
+      check_mode: no
+      tags:
+        - mount_option_nodev_removable_partitions
+        - unknown_severity
+        - configure_strategy
+        - low_complexity
+        - high_disruption
+        - NIST-800-53-AC-19(a)
+        - NIST-800-53-AC-19(d)
+        - NIST-800-53-AC-19(e)
+        - NIST-800-53-CM-7
+        - NIST-800-53-MP-2
+    
+    - name: get back device fstype
+      shell: mount | grep ' {{ var_removable_partition }} ' | cut -d ' ' -f 5
+      register: device_fstype
+      check_mode: no
+      tags:
+        - mount_option_nodev_removable_partitions
+        - unknown_severity
+        - configure_strategy
+        - low_complexity
+        - high_disruption
+        - NIST-800-53-AC-19(a)
+        - NIST-800-53-AC-19(d)
+        - NIST-800-53-AC-19(e)
+        - NIST-800-53-CM-7
+        - NIST-800-53-MP-2
+    
+    - name: Ensure permission nodev are set on var_removable_partition
+      mount:
+        path: "{{ var_removable_partition }}"
+        src: "{{device_name.stdout}}"
+        opts: "{{ device_cur_mountoption.stdout }},nodev"
+        state: "mounted"
+        fstype: "{{device_fstype.stdout}}"
+      tags:
+        - mount_option_nodev_removable_partitions
+        - unknown_severity
+        - configure_strategy
+        - low_complexity
+        - high_disruption
+        - NIST-800-53-AC-19(a)
+        - NIST-800-53-AC-19(d)
+        - NIST-800-53-AC-19(e)
+        - NIST-800-53-CM-7
+        - NIST-800-53-MP-2
+
+      - name: get back device associated to mountpoint
+      shell: mount | grep ' /home ' |cut -d ' ' -f 1
+      register: device_name
+      check_mode: no
+      tags:
+        - mount_option_home_nodev
+        - unknown_severity
+        - configure_strategy
+        - low_complexity
+        - high_disruption
+    
+    - name: get back device previous mount option
+      shell: mount | grep ' /home ' | sed -re 's:.*\((.*)\):\1:'
+      register: device_cur_mountoption
+      check_mode: no
+      tags:
+        - mount_option_home_nodev
+        - unknown_severity
+        - configure_strategy
+        - low_complexity
+        - high_disruption
+    
+    - name: get back device fstype
+      shell: mount | grep ' /home ' | cut -d ' ' -f 5
+      register: device_fstype
+      check_mode: no
+      tags:
+        - mount_option_home_nodev
+        - unknown_severity
+        - configure_strategy
+        - low_complexity
+        - high_disruption
+    
+    - name: Ensure permission nodev are set on /home
+      mount:
+        path: "/home"
+        src: "{{device_name.stdout}}"
+        opts: "{{device_cur_mountoption.stdout}},nodev"
+        state: "mounted"
+        fstype: "{{device_fstype.stdout}}"
+      tags:
+        - mount_option_home_nodev
+        - unknown_severity
+        - configure_strategy
+        - low_complexity
+        - high_disruption
+
+     - name: get back device associated to mountpoint
+      shell: mount | grep ' /dev/shm ' |cut -d ' ' -f 1
+      register: device_name
+      check_mode: no
+      tags:
+        - mount_option_dev_shm_nodev
+        - unknown_severity
+        - configure_strategy
+        - low_complexity
+        - high_disruption
+        - NIST-800-53-CM-7
+        - NIST-800-53-MP-2
+    
+    - name: get back device previous mount option
+      shell: mount | grep ' /dev/shm ' | sed -re 's:.*\((.*)\):\1:'
+      register: device_cur_mountoption
+      check_mode: no
+      tags:
+        - mount_option_dev_shm_nodev
+        - unknown_severity
+        - configure_strategy
+        - low_complexity
+        - high_disruption
+        - NIST-800-53-CM-7
+        - NIST-800-53-MP-2
+    
+    - name: get back device fstype
+      shell: mount | grep ' /dev/shm ' | cut -d ' ' -f 5
+      register: device_fstype
+      check_mode: no
+      tags:
+        - mount_option_dev_shm_nodev
+        - unknown_severity
+        - configure_strategy
+        - low_complexity
+        - high_disruption
+        - NIST-800-53-CM-7
+        - NIST-800-53-MP-2
+    
+    - name: Ensure permission nodev are set on /dev/shm
+      mount:
+        path: "/dev/shm"
+        src: "{{device_name.stdout}}"
+        opts: "{{device_cur_mountoption.stdout}},nodev"
+        state: "mounted"
+        fstype: "{{device_fstype.stdout}}"
+      tags:
+        - mount_option_dev_shm_nodev
+        - unknown_severity
+        - configure_strategy
+        - low_complexity
+        - high_disruption
+        - NIST-800-53-CM-7
+        - NIST-800-53-MP-2
